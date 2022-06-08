@@ -1,4 +1,4 @@
-package vtp2022.day2.workshop;
+package vtp2022.day2.workshop.account;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;

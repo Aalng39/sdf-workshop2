@@ -1,4 +1,4 @@
-package vtp2022.day2.workshop;
+package vtp2022.day2.workshop.account;
 
 public class FixedDepositAccount extends BankAccount{
     private float interest = 3;
