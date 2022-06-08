@@ -1,4 +1,4 @@
-package vtp2022;
+package vtp2022.day2.workshop;
 
 import vtp2022.day2.workshop.account.BankAccount;
 
