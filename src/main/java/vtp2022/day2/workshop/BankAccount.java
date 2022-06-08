@@ -6,50 +6,47 @@ import java.util.List;
 // package to generate uuid
 import java.util.UUID;
 
+/**
+ * This is a bank account class that does withdwal and deposit
+ */
 public class BankAccount {
     // bank account
-    private String name ="";
-
+    private final String name;
+    
     // this is a generated account id from the java util UUID class
-    private String accId = UUID.randomUUID()
+    private final String acctId =  UUID.randomUUID()
                                     .toString()
-                                    .substring(0, 8);
-    // holds the bank acc balance                                
+                                    .substring(0,8);
+    // holds the bank acc balance
     private float balance = 0f;
-    // list of transaction history in the event of
-    // anything done on the bank account object
+    // list of transaction history in the event of 
+    // anything done on the bankaccount object
     private List<String> transaction = new LinkedList<>();
 
     private boolean isClosed = false;
-    
+
     private LocalDateTime accountCreationDate;
     private LocalDateTime accountClosingDate;
-
+    
+    // constructor with bank account name
     public BankAccount(String name){
         this.name = name;
-    }  
+        this.balance = 0;
+    }
 
+    // 2nd constructor with bank account name and the initial balance.
     public BankAccount(String name, float initialBal){
         this.name = name;
-        this.balance =initialBal;
-
+        this.balance = initialBal;
     }
 
     // Getter and setter for the rest of the properties
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAccId() {
-        return accId;
-    }
-
-    public void setAccId(String accId) {
-        this.accId = accId;
+   
+    public String getAcctId() {
+        return acctId;
     }
 
     public float getBalance() {
@@ -91,69 +88,70 @@ public class BankAccount {
     public void setAccountClosingDate(LocalDateTime accountClosingDate) {
         this.accountClosingDate = accountClosingDate;
     }
-   
+
     public float withdraw(String withdrawAmt){
         Float withdrawAmtF = null;
         try{
             withdrawAmtF = Float.parseFloat(withdrawAmt);
-            if(withdrawAmtF.floatValue() <= 0){
+            if (withdrawAmtF.floatValue() <= 0){
                 throw new IllegalArgumentException("Withdrawal amount cannot be negative or kosong");
             }
+
             if(this.isClosed()){
                 throw new IllegalArgumentException("Account is closed lah!");
             }
+
             if(withdrawAmtF.floatValue() > this.balance){
-                throw new IllegalArgumentException("Oii overspending la!");
+                throw new IllegalArgumentException("Oiii overspending ah !");
             }
-        
-        this.balance = this.balance - withdrawAmtF.floatValue();
 
-        // Construct the transaction history event log
-        StringBuilder txnStrBld = new StringBuilder();
-        txnStrBld.append("Withdraw $");
-        txnStrBld.append(withdrawAmtF.floatValue());
-        txnStrBld.append("at");
-        txnStrBld.append(LocalDateTime.now());
-        System.out.println(txnStrBld.toString());
-        // save the event log into the txn linkedList
-        transaction.add(txnStrBld.toString());
-        // update the deposit amount
-    }catch(NumberFormatException e){
-        System.err.print(e);
-        throw new IllegalArgumentException("Invalid withdraw amount");
+            this.balance = this.balance  - withdrawAmtF.floatValue();
+            // Construct the transaction history event log 
+            StringBuilder txnStrbld = new StringBuilder();
+            txnStrbld.append("Withdraw $");
+            txnStrbld.append(withdrawAmtF.floatValue());
+            txnStrbld.append(" at ");
+            txnStrbld.append(LocalDateTime.now());
+            System.out.println(txnStrbld.toString());
+            // save the event log into the txn linkedList 
+            transaction.add(txnStrbld.toString());
+            // update the deposit amount
+            
+        }catch(NumberFormatException e){
+            System.err.print(e);
+            throw new IllegalArgumentException("Invalid withdraw amount");
+        }
+        return this.balance;
     }
-    return withdrawAmtF.floatValue();
-}
-
-    public void deposit(String depositAmt){      
+    
+    public void deposit(String depositAmt){
         try{
             Float depositAmtF = Float.parseFloat(depositAmt);
-            if(depositAmtF.floatValue() <= 0){
+            if (depositAmtF.floatValue() <= 0){
                 throw new IllegalArgumentException("Deposit amount cannot be negative or kosong");
             }
+
             if(this.isClosed()){
                 throw new IllegalArgumentException("Account is closed lah!");
             }
-        
-        this.balance = this.balance + depositAmtF.floatValue();
 
-        // Construct the transaction history event log
-        StringBuilder txnStrBld = new StringBuilder();
-        txnStrBld.append("Deposit $");
-        txnStrBld.append(depositAmtF.floatValue());
-        txnStrBld.append("at");
-        txnStrBld.append(LocalDateTime.now());
-        System.out.println(txnStrBld.toString());
-        // save the event log into the txn linkedList
-        transaction.add(txnStrBld.toString());
-        // update the deposit amount
+            this.balance = this.balance  + depositAmtF.floatValue();
+            // Construct the transaction history event log 
+            StringBuilder txnStrbld = new StringBuilder();
+            txnStrbld.append("Deposit $");
+            txnStrbld.append(depositAmtF.floatValue());
+            txnStrbld.append(" at ");
+            txnStrbld.append(LocalDateTime.now());
+            System.out.println(txnStrbld.toString());
+            // save the event log into the txn linkedList 
+            transaction.add(txnStrbld.toString());
+            // update the deposit amount
+            
+        }catch(NumberFormatException e){
+            System.err.print(e);
+            throw new IllegalArgumentException("Invalid deposit amount");
+        }
         
-    }catch(NumberFormatException e){
-        System.err.print(e);
-        throw new IllegalArgumentException("Invalid deposit amount");
     }
-
-     }
-
 
 }
