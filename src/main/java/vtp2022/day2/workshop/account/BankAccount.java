@@ -92,7 +92,7 @@ public class BankAccount {
     public float withdraw(String withdrawAmt){
         Float withdrawAmtF = null;
         try{
-            withdrawAmtF = Float.parseFloat(withdrawAmt);
+            withdrawAmtF = Float.parseFloat(withdrawAmt); // parse return a Float object not a float primitive
             if (withdrawAmtF.floatValue() <= 0){
                 throw new IllegalArgumentException("Withdrawal amount cannot be negative or kosong");
             }
@@ -116,6 +116,7 @@ public class BankAccount {
             // save the event log into the txn linkedList 
             transaction.add(txnStrbld.toString());
             // update the deposit amount
+            // can use printf to create one chain line
             
         }catch(NumberFormatException e){
             System.err.print(e);
@@ -144,6 +145,7 @@ public class BankAccount {
             txnStrbld.append(LocalDateTime.now());
             System.out.println(txnStrbld.toString());
             // save the event log into the txn linkedList 
+            // can use printf to create one chain line
             transaction.add(txnStrbld.toString());
             // update the deposit amount
             
